@@ -1,8 +1,8 @@
+---
 
-```markdown
 # Task Manager Project
 
-A web-based application built with Django that allows users to manage tasks efficiently. Users can register, authenticate, create tasks, update them, and delete them as needed. The project includes a RESTful API with JWT authentication and Swagger documentation.
+A web-based application built with Django for managing tasks efficiently. Users can register, authenticate, create tasks, update them, and delete them as needed. The project includes a RESTful API with JWT authentication, Swagger documentation, and a React frontend with Bootstrap styling.
 
 ## Table of Contents
 
@@ -22,6 +22,7 @@ A web-based application built with Django that allows users to manage tasks effi
 - **Filtering and Ordering**: Filter tasks by status and due date.
 - **API Documentation**: Interactive API docs with Swagger UI.
 - **Admin Interface**: Manage users and tasks via Django's admin panel.
+- **Frontend UI**: React-based frontend with Bootstrap styling for improved UI.
 
 ## Prerequisites
 
@@ -30,109 +31,114 @@ A web-based application built with Django that allows users to manage tasks effi
 - **MariaDB or MySQL Server**
 - **pip (Python package installer)**
 - **Git (for cloning the repository)**
+- **Node.js and npm (for React frontend)**
 
 ## Installation
 
-### 1. Clone the Repository
+### Backend Setup
 
-```bash
-git clone https://github.com/klungwe/task-manager.git
-cd task-manager
-```
+1. **Clone the Repository**
 
-### 2. Set Up a Virtual Environment
+   ```bash
+   git clone https://github.com/klungwe/task-manager.git
+   cd task-manager
+   ```
 
-#### On macOS and Linux:
+2. **Set Up a Virtual Environment**
 
-```bash
-python3 -m venv env
-source env/bin/activate
-```
+   ```bash
+   python -m venv env
+   source env/bin/activate  # On Windows: env\Scripts\activate
+   ```
 
-#### On Windows:
+3. **Install Dependencies**
 
-```bash
-python -m venv env
-env\Scripts\activate
-```
+   ```bash
+   pip install -r requirements.txt
+   ```
 
-### 3. Install Dependencies
+4. **Configure the Database**
 
-```bash
-pip install -r requirements.txt
-```
+   - **Install MariaDB or MySQL**, if not already installed.
+   - **Create a Database and User**
 
-### 4. Configure the Database
+     ```bash
+     mysql -u root -p
+     ```
 
-#### a. Install MariaDB or MySQL (if not already installed)
+     ```sql
+     CREATE DATABASE task_manager_db;
+     CREATE USER 'task_user'@'localhost' IDENTIFIED BY 'task1234';
+     GRANT ALL PRIVILEGES ON task_manager_db.* TO 'task_user'@'localhost';
+     FLUSH PRIVILEGES;
+     EXIT;
+     ```
 
-Follow the official installation guide for your operating system.
+   - **Update `settings.py`** with your database configuration:
 
-#### b. Create a Database and User
+     ```python
+     DATABASES = {
+         'default': {
+             'ENGINE': 'django.db.backends.mysql',
+             'NAME': 'task_manager_db',
+             'USER': 'task_user',
+             'PASSWORD': 'task1234',
+             'HOST': 'localhost',
+             'PORT': '3306',
+         }
+     }
+     ```
 
-Log in to the MariaDB/MySQL shell:
+5. **Apply Migrations**
 
-```bash
-mysql -u root -p
-```
+   ```bash
+   python manage.py migrate
+   ```
 
-Execute the following SQL commands:
+6. **Create a Superuser**
 
-```sql
-CREATE DATABASE task_manager_db;
-CREATE USER 'task_user'@'localhost' IDENTIFIED BY 'task1234';
-GRANT ALL PRIVILEGES ON task_manager_db.* TO 'task_user'@'localhost';
-FLUSH PRIVILEGES;
-EXIT;
-```
+   ```bash
+   python manage.py createsuperuser
+   ```
 
-#### c. Update `settings.py`
+### Frontend Setup
 
-In `task_manager/settings.py`, configure the database settings:
+1. **Navigate to the Frontend Directory**
 
-```python
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',  # Use 'mysql' for MariaDB
-        'NAME': 'task_manager_db',
-        'USER': 'task_user',
-        'PASSWORD': 'task1234',
-        'HOST': 'localhost',
-        'PORT': '3306',
-    }
-}
-```
+   ```bash
+   cd /task_manager/frontend/task-manager-react
+   ```
 
-### 5. Apply Migrations
+2. **Install Frontend Dependencies**
 
-```bash
-python manage.py makemigrations
-python manage.py migrate
-```
+   ```bash
+   npm install
+   ```
 
-### 6. Create a Superuser
 
-```bash
-python manage.py createsuperuser
-```
+### Running the Application
 
-### 7. Run the Development Server
+1. **Navigate to root folder**:
 
-```bash
-python manage.py runserver
-```
+   ```bash
+   cd /task-manager
+   ```
 
-The application will be available at `http://127.0.0.1:8000/`.
+2. **Run the executable script (for macOS/Linux)**:
+
+   ```bash
+   ./start.sh
+   ```
+
+   This command will start both the Django backend and React frontend servers.
+
+---
 
 ## Usage
 
-### Access the Admin Interface
-
-Navigate to `http://127.0.0.1:8000/admin/` and log in with your superuser credentials.
-
-### Access the API Documentation
-
-Visit `http://127.0.0.1:8000/swagger/` to interact with the API using Swagger UI.
+- **Access the Admin Interface**: `http://127.0.0.1:8000/admin/`
+- **Access the API Documentation**: `http://127.0.0.1:8000/swagger/`
+- **Frontend Application**: `http://127.0.0.1:3000`
 
 ## API Endpoints
 
@@ -140,11 +146,11 @@ Visit `http://127.0.0.1:8000/swagger/` to interact with the API using Swagger UI
 
 - **Obtain Token**
 
-  ```
+  ```plaintext
   POST /api/token/
   ```
 
-  **Payload:**
+  **Payload**:
 
   ```json
   {
@@ -155,11 +161,11 @@ Visit `http://127.0.0.1:8000/swagger/` to interact with the API using Swagger UI
 
 - **Refresh Token**
 
-  ```
+  ```plaintext
   POST /api/token/refresh/
   ```
 
-  **Payload:**
+  **Payload**:
 
   ```json
   {
@@ -171,13 +177,13 @@ Visit `http://127.0.0.1:8000/swagger/` to interact with the API using Swagger UI
 
 - **Register User**
 
-  ```
+  ```plaintext
   POST /api/accounts/register/
   ```
 
 - **User Profile**
 
-  ```
+  ```plaintext
   GET /api/accounts/profile/
   ```
 
@@ -185,31 +191,31 @@ Visit `http://127.0.0.1:8000/swagger/` to interact with the API using Swagger UI
 
 - **List Tasks**
 
-  ```
+  ```plaintext
   GET /api/tasks/
   ```
 
 - **Create Task**
 
-  ```
+  ```plaintext
   POST /api/tasks/
   ```
 
 - **Retrieve Task**
 
-  ```
+  ```plaintext
   GET /api/tasks/{id}/
   ```
 
 - **Update Task**
 
-  ```
+  ```plaintext
   PUT /api/tasks/{id}/
   ```
 
 - **Delete Task**
 
-  ```
+  ```plaintext
   DELETE /api/tasks/{id}/
   ```
 
@@ -217,46 +223,80 @@ Visit `http://127.0.0.1:8000/swagger/` to interact with the API using Swagger UI
 
 ```
 task-manager/
-├── accounts/
-│   ├── migrations/
-│   ├── __init__.py
-│   ├── admin.py
-│   ├── apps.py
-│   ├── models.py
-│   ├── serializers.py
-│   ├── urls.py
-│   └── views.py
-├── tasks/
-│   ├── migrations/
-│   ├── __init__.py
-│   ├── admin.py
-│   ├── apps.py
-│   ├── models.py
-│   ├── serializers.py
-│   ├── urls.py
-│   └── views.py
-├── task_manager/
-│   ├── __init__.py
-│   ├── asgi.py
-│   ├── settings.py
-│   ├── urls.py
-│   └── wsgi.py
-├── manage.py
-├── requirements.txt
-└── README.md
-```
-
-## Contributing
-
-Contributions are welcome! Please follow these steps:
-
-1. Fork the repository.
-2. Create a new branch: `git checkout -b feature/your-feature-name`.
-3. Commit your changes: `git commit -m 'Add some feature'`.
-4. Push to the branch: `git push origin feature/your-feature-name`.
-5. Open a pull request.
-
-## License
-
-This project is licensed under the MIT License.
+├── README.md
+├── requirements.pip
+├── setup.py
+├── start.sh
+└── task_manager
+    ├── accounts
+    │   ├── __init__.py
+    │   ├── admin.py
+    │   ├── apps.py
+    │   ├── migrations
+    │   │   └── __init__.py
+    │   ├── models.py
+    │   ├── serializers.py
+    │   ├── tests.py
+    │   ├── token_serializers.py
+    │   ├── urls.py
+    │   └── views.py
+    ├── frontend
+    │   └── task-manager-react
+    │       ├── README.md
+    │       ├── package-lock.json
+    │       ├── package.json
+    │       ├── public
+    │       │   ├── favicon.ico
+    │       │   ├── index.html
+    │       │   ├── logo192.png
+    │       │   ├── logo512.png
+    │       │   ├── manifest.json
+    │       │   └── robots.txt
+    │       └── src
+    │           ├── App.css
+    │           ├── App.js
+    │           ├── App.test.js
+    │           ├── components
+    │           ├── context
+    │           │   └── AuthContext.js
+    │           ├── index.css
+    │           ├── index.js
+    │           ├── logo.svg
+    │           ├── pages
+    │           │   ├── auth
+    │           │   │   ├── Login.jsx
+    │           │   │   └── Login.modules.css
+    │           │   └── tasks
+    │           │       ├── TaskDetails
+    │           │       │   ├── TaskDetails.jsx
+    │           │       │   ├── TaskDetails.modules.css
+    │           │       │   └── TaskEditForm.jsx
+    │           │       └── TaskList
+    │           │           ├── TaskItem.jsx
+    │           │           ├── TaskList.jsx
+    │           │           └── TaskList.modules.css
+    │           ├── reportWebVitals.js
+    │           ├── services
+    │           │   └── api.js
+    │           ├── setupTests.js
+    │           └── styles.css
+    ├── manage.py
+    ├── task_manager
+    │   ├── __init__.py
+    │   ├── asgi.py
+    │   ├── settings.py
+    │   ├── urls.py
+    │   └── wsgi.py
+    └── tasks
+        ├── __init__.py
+        ├── admin.py
+        ├── apps.py
+        ├── migrations
+        │   ├── 0001_initial.py
+        │   └── __init__.py
+        ├── models.py
+        ├── serializers.py
+        ├── tests.py
+        ├── urls.py
+        └── views.py
 ```

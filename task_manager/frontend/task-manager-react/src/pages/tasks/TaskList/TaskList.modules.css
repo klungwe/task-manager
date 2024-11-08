@@ -1,0 +1,12 @@
+/* src/tasks/TaskList/TaskList.modules.css */
+
+.taskItem {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.taskItem button {
+    margin-left: 5px;
+}
