@@ -125,3 +125,36 @@ dmypy.json
 # Model diagram made using django-extentions graph model app
 *.tar.gz
 .vscode
+# Ignore virtual environments
+env/
+venv/
+
+# Ignore Python cache and compiled files
+__pycache__/
+*.py[cod]
+
+# Ignore Django migrations
+**/migrations/
+
+# Ignore database files
+*.sqlite3
+
+# Ignore log files
+*.log
+
+# Ignore static files and media
+staticfiles/
+media/
+
+# Ignore IDE/editor-specific files
+.vscode/
+.idea/
+
+# Ignore Node.js modules
+node_modules/
+
+# Ignore build files
+frontend/build/
+dist/
+*.tar.gz
+*.zip
