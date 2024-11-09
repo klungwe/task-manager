@@ -1,0 +1,41 @@
+Design and develop a RESTful web service application that provides a basic task management system. The web service should allow users to perform the following operations:
+
+	1.	Create a new task (with attributes such as task title, description, due date, and status).
+	2.	Retrieve a list of all tasks or a specific task by its ID.
+	3.	Update an existing task (allowing changes to title, description, due date, or status).
+	4.	Delete a task by its ID.
+	5.	Filter tasks by status (e.g., completed, pending).
+
+Requirements:
+
+	•	Implement the web service using a framework of your choice (e.g., Flask-python, Spring Boot-Java, *Django-Python*, etc.).
+	•	The web service should follow RESTful design principles and use JSON format for request and response data.
+	•	Provide proper error handling for invalid inputs or non-existing tasks.
+	•	Document the API endpoints and provide usage examples (e.g., using *Swagger* or Postman).
+	•	Optional: Add authentication (e.g., using JWT) to restrict access to certain operations.
+
+Deliverables:
+
+	•	Source code of the web service.
+	•	Documentation of the API endpoints and usage examples.
+	•	Screenshots or a brief demo of the web service in action.
+
+REST APIs use standard HTTP methods to perform actions on resources:
+
+GET: Retrieve data from the server (e.g., get a list of users).
+POST: Create a new resource (e.g., add a new user).
+PUT: Update an existing resource (e.g., change user details).
+DELETE: Remove a resource (e.g., delete a user).
+PATCH: is designed for partial updates.
+
+Example REST API Interaction
+Suppose a REST API has an endpoint /api/tasks:
+
+*TaskListCreateAPIView*
+GET /api/tasks: Retrieves a list of all tasks.
+POST /api/tasks: Creates a new task, with details in the request body.
+
+*TaskRetrieveUpdateDestroyAPIView(individual resource)*
+GET /api/tasks/123: Retrieves the task with ID 123.
+PUT /api/tasks/123: Updates task 123 with new data.
+DELETE /api/tasks/123: Deletes task 123.
